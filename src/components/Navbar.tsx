@@ -3,7 +3,7 @@ const Navbar = () => {
 		<header>
 			<nav
 				role="navigation"
-				className="w-full px-4 py-2 flex bg-black text-white"
+				className="w-full px-4 py-4 flex text-xl bg-black text-white"
 			>
 				<div>HOME</div>
 			</nav>
