@@ -5,12 +5,14 @@ interface MultistepForm {
 	handleSubmit: () => void;
 	children?: any;
 	formSteps: any[];
+	submitButtonText: string;
 }
 
 const MultistepForm = ({
 	handleSubmit,
 	children,
 	formSteps,
+	submitButtonText,
 }: MultistepForm) => {
 	const { step, next, back, isLastStep } = useMultistepForm(formSteps);
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,7 +25,7 @@ const MultistepForm = ({
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="max-w-sm flex flex-col gap-4">
+		<form onSubmit={onSubmit} className="max-w-sm w-full flex flex-col gap-4">
 			{step}
 			<div className="mt-4 w-full flex gap-2">
 				{
@@ -33,7 +35,7 @@ const MultistepForm = ({
 				}
 				{isLastStep && (
 					<Button variant="filled" onClick={handleSubmit} className="w-full">
-						OBLICZ TRASĘ
+						{submitButtonText}
 					</Button>
 				)}
 			</div>
