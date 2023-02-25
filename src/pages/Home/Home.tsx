@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Input, Navbar, RouteHistory } from "../../components";
 import MultistepForm from "../../components/MultistepForm";
 import { Route } from "../../App";
-import { useFlexiblePolyline } from "../../hooks/useFlexiblePolyline";
+import { useFlexiblePolyline } from "../../hooks/useFlexiblePolyline/useFlexiblePolyline";
 import { getRoute } from "./getRoute";
 import { getCoordinates } from "./getCoordinates";
 
@@ -38,6 +38,7 @@ const Home = ({ setCurrentRoute }: Home) => {
 			length: route.summary.length,
 			positions: useFlexiblePolyline(route.polyline),
 		});
+		console.log(route.polyline, useFlexiblePolyline(route.polyline));
 	};
 
 	return (
