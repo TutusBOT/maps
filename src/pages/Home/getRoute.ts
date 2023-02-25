@@ -9,7 +9,7 @@ export const getRoute = async ({
 }) => {
 	try {
 		const { data } = await axios.get(
-			`https://router.hereapi.com/v8/routes?transportMode=car&origin=${origin}&destination=${destination}&return=polyline,summary&apikey=${
+			`https://router.hereapi.com/v8/routes?transportMode=car&origin=${origin}&destination=${destination}&currency=PLN&return=polyline,summary,tolls&apikey=${
 				import.meta.env.VITE_HERE_API_KEY
 			}`
 		);
