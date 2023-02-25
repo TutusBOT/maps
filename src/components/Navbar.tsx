@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
 	return (
 		<header>
@@ -5,7 +7,7 @@ const Navbar = () => {
 				role="navigation"
 				className="w-full px-4 py-4 flex text-xl bg-black text-white"
 			>
-				<div>HOME</div>
+				<Link to="/maps/">HOME</Link>
 			</nav>
 		</header>
 	);
