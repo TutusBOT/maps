@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Input, Navbar, RouteHistory } from "../../components";
 import MultistepForm from "../../components/MultistepForm";
 import { AppContext } from "../../App";
-import { useFlexiblePolyline } from "../../hooks/useFlexiblePolyline";
+import { useFlexiblePolyline } from "../../hooks/useFlexiblePolyline/useFlexiblePolyline";
 import { getRoute } from "./getRoute";
 import { getCoordinates } from "./getCoordinates";
 import { useNavigate } from "react-router";
