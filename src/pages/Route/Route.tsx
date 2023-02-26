@@ -12,11 +12,9 @@ const Route = () => {
 	const pdfRef = useRef(null);
 	const appContext = useContext(AppContext);
 
-	if (!appContext || !appContext.currentRoute) return null;
-
 	const generatePDF = async () => {
 		const report = new jsPDF();
-		if (!pdfRef.current || !appContext.currentRoute) return;
+		if (!pdfRef.current) return;
 		const canvas = await html2canvas(pdfRef.current);
 		const data = canvas.toDataURL("image/png");
 		const imgProperties = report.getImageProperties(data);
@@ -28,10 +26,12 @@ const Route = () => {
 		);
 	};
 
+	{
+		console.log(appContext);
+	}
+	if (!appContext) return null;
 	useEffect(() => {
-		if (!appContext?.currentRoute) {
-			console.log("hcu");
-
+		if (!appContext?.currentRoute.positions.length) {
 			navigate("/maps/");
 		}
 	}, []);
