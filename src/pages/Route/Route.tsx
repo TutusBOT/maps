@@ -33,7 +33,7 @@ const Route = () => {
 		}
 	}, []);
 	return (
-		<div className="h-screen overflow-hidden">
+		<div className="h-screen flex flex-col">
 			<Navbar />
 			<div className="w-full pt-16 px-2 sm:px-8 sm:grid sm:grid-cols-3 pb-2">
 				<table
@@ -121,7 +121,9 @@ const Route = () => {
 					</div>
 				</div>
 			</div>
-			<Map />
+			<div className="w-full h-full">
+				<Map />
+			</div>
 		</div>
 	);
 };
