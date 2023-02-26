@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useMultistepForm } from "../hooks/useMultistepForm";
 import Button from "./Button";
 
@@ -15,8 +16,11 @@ const MultistepForm = ({
 	submitButtonText,
 }: MultistepForm) => {
 	const { step, next, back, isLastStep } = useMultistepForm(formSteps);
+	const [submit, setSubmit] = useState(false);
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		if (submit) return handleSubmit();
+
 		if (isLastStep) {
 			back();
 		} else {
@@ -25,7 +29,10 @@ const MultistepForm = ({
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="max-w-sm w-full flex flex-col gap-4">
+		<form
+			onSubmit={onSubmit}
+			className="max-w-md w-full flex flex-col gap-4 border-2 border-black p-2 sm:p-8 rounded-xl shadow-2xl bg-white"
+		>
 			{step}
 			<div className="mt-4 w-full flex gap-2">
 				{
@@ -34,7 +41,12 @@ const MultistepForm = ({
 					</Button>
 				}
 				{isLastStep && (
-					<Button variant="filled" onClick={handleSubmit} className="w-full">
+					<Button
+						variant="filled"
+						onClick={() => setSubmit(true)}
+						type="submit"
+						className="w-full"
+					>
 						{submitButtonText}
 					</Button>
 				)}
