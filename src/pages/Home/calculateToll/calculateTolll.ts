@@ -1,5 +1,5 @@
 export const calculateToll = (
-	tolls: Array<{ fares: [{ convertedPrice: { value: number } }] }>
+	tolls: Array<{ fares: Array<{ convertedPrice: { value: number } }> }>
 ) => {
 	let accumulatedToll = 0;
 	tolls.forEach((toll) => {
