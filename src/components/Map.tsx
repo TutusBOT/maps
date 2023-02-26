@@ -6,18 +6,16 @@ import {
 	Tooltip,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
-interface Map {
-	center?: [number, number];
-	positions: Array<[number, number]>;
-	origin: string;
-	destination: string;
-}
+const Map = () => {
+	const appContext = useContext(AppContext);
 
-const Map = ({ center, positions, origin, destination }: Map) => {
+	if (!appContext) return null;
 	return (
 		<MapContainer
-			center={center || [51.505, -0.09]}
+			center={appContext.currentRoute.positions[0]}
 			zoom={13}
 			scrollWheelZoom={false}
 			className="mt-16 w-full h-[500px]"
@@ -26,12 +24,22 @@ const Map = ({ center, positions, origin, destination }: Map) => {
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			<Polyline positions={positions} color="#00FFFF" weight={3} />
-			<Marker position={positions[0]}>
-				<Tooltip>{origin}</Tooltip>
+			<Polyline
+				positions={appContext.currentRoute.positions}
+				color="#0000FF"
+				weight={3}
+			/>
+			<Marker position={appContext.currentRoute.positions[0]}>
+				<Tooltip>{appContext.currentRoute.origin}</Tooltip>
 			</Marker>
-			<Marker position={positions[positions.length - 1]}>
-				<Tooltip>{destination}</Tooltip>
+			<Marker
+				position={
+					appContext.currentRoute.positions[
+						appContext.currentRoute.positions.length - 1
+					]
+				}
+			>
+				<Tooltip>{appContext.currentRoute.destination}</Tooltip>
 			</Marker>
 		</MapContainer>
 	);
