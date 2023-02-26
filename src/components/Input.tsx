@@ -6,11 +6,25 @@ interface Input {
 	required?: boolean;
 	value: string | number | readonly string[] | undefined;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	className?: string;
+	min?: number;
+	max?: number;
 }
 
-const Input = ({ label, id, type, name, required, value, onChange }: Input) => {
+const Input = ({
+	label,
+	id,
+	type,
+	name,
+	required,
+	value,
+	onChange,
+	className,
+	min,
+	max,
+}: Input) => {
 	return (
-		<div className="flex flex-col max-w-3xl w-full text-lg">
+		<div className={`flex flex-col max-w-3xl w-full text-lg ${className}`}>
 			<label htmlFor={id}>{label}</label>
 			<input
 				id={id}
@@ -20,6 +34,8 @@ const Input = ({ label, id, type, name, required, value, onChange }: Input) => {
 				required={required}
 				value={value}
 				onChange={(e) => onChange(e)}
+				min={min}
+				max={max}
 			/>
 		</div>
 	);
