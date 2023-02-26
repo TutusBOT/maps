@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Input, Navbar, RouteHistory } from "../../components";
 import MultistepForm from "../../components/MultistepForm";
 import { AppContext } from "../../App";
@@ -7,6 +7,8 @@ import { getRoute } from "./getRoute";
 import { getCoordinates } from "./getCoordinates";
 import { useNavigate } from "react-router";
 import { calculateToll } from "./calculateToll/calculateTolll";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
 	const appContext = useContext(AppContext);
@@ -52,6 +54,7 @@ const Home = () => {
 
 	return (
 		<div>
+			<ToastContainer position="bottom-left" theme="light" pauseOnHover />
 			<Navbar />
 			<div
 				className="w-full flex justify-center items-center h-screen"

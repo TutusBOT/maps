@@ -1,4 +1,5 @@
 import axios from "axios";
+import { handleError } from "../../utils/handleError";
 
 export const getCoordinates = async ({
 	street,
@@ -17,16 +18,6 @@ export const getCoordinates = async ({
 		);
 		return data.items;
 	} catch (error) {
-		if (axios.isAxiosError(error)) {
-			// Access to config, request, and response
-			console.log(error);
-			alert(error.message + "\n" + error.response?.data.error_description);
-		} else if (error instanceof Error) {
-			// Just a stock error
-			alert(error);
-		} else {
-			// unknown
-			alert(error);
-		}
+		handleError(error);
 	}
 };
