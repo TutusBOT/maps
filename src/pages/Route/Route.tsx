@@ -26,9 +26,6 @@ const Route = () => {
 		);
 	};
 
-	{
-		console.log(appContext);
-	}
 	if (!appContext) return null;
 	useEffect(() => {
 		if (!appContext?.currentRoute.positions.length) {

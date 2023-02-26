@@ -11,7 +11,5 @@ export const calculateRouteCost = ({
 	length,
 	toll,
 }: calculateRouteCost) => {
-	console.log(length);
-
 	return (((cost * length) / M_TO_KM_CONVERSION_RATE + toll) * 1.1).toFixed(2);
 };
