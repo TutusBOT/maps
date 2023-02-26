@@ -1,17 +1,17 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Input, Navbar, RouteHistory } from "../../components";
 import MultistepForm from "../../components/MultistepForm";
-import { RouteI } from "../../App";
+import { AppContext } from "../../App";
 import { useFlexiblePolyline } from "../../hooks/useFlexiblePolyline";
 import { getRoute } from "./getRoute";
 import { getCoordinates } from "./getCoordinates";
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { calculateToll } from "./calculateToll/calculateTolll";
 
-interface Home {
-	setCurrentRoute: Dispatch<SetStateAction<RouteI>>;
-}
+const Home = () => {
+	const appContext = useContext(AppContext);
+	if (!appContext) return null;
 
-const Home = ({ setCurrentRoute }: Home) => {
 	const navigate = useNavigate();
 	const [originFields, setOriginFields] = useState({
 		country: "",
@@ -35,24 +35,17 @@ const Home = ({ setCurrentRoute }: Home) => {
 			),
 		});
 		if (!route) return;
-		let accumulatedToll = 0;
-		if (route.tolls) {
-			route.tolls.forEach(
-				(toll: { fares: [{ convertedPrice: { value: number } }] }) => {
-					toll.fares.forEach((fare) => {
-						accumulatedToll += fare.convertedPrice.value;
-					});
-				}
-			);
-		}
-		setCurrentRoute({
+
+		const currentRoute = {
 			destination: destination.address.label,
 			origin: origin.address.label,
 			length: route.summary.length,
 			positions: useFlexiblePolyline(route.polyline),
-			toll: accumulatedToll,
-		});
-		console.log(route);
+			toll: calculateToll(route.tolls ? route.tolls : []),
+		};
+
+		appContext.setCurrentRoute(currentRoute);
+		appContext.setRouteHistory([...appContext.routeHistory, currentRoute]);
 
 		navigate("/maps/route");
 	};
@@ -60,7 +53,14 @@ const Home = ({ setCurrentRoute }: Home) => {
 	return (
 		<div>
 			<Navbar />
-			<div className="w-full flex justify-center py-8">
+			<div
+				className="w-full flex justify-center items-center h-screen"
+				style={{
+					backgroundImage: "url(map-background.png)",
+					backgroundRepeat: "no-repeat",
+					backgroundSize: "cover",
+				}}
+			>
 				<MultistepForm
 					handleSubmit={handleSubmit}
 					submitButtonText="OBLICZ TRASĘ"
@@ -142,8 +142,16 @@ const Home = ({ setCurrentRoute }: Home) => {
 						</>,
 					]}
 				/>
+				{appContext.routeHistory.length > 0 && (
+					<a
+						href="#history"
+						className="absolute left-1/2 transform -translate-x-1/2 bottom-20 text-2xl bg-black rounded-lg py-2 px-8 text-white hover:bg-gray-900 transition-colors duration-500"
+					>
+						Historia tras
+					</a>
+				)}
 			</div>
-			<RouteHistory />
+			{appContext.routeHistory.length > 0 && <RouteHistory />}
 		</div>
 	);
 };
