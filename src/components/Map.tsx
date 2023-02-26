@@ -11,7 +11,7 @@ import { AppContext } from "../App";
 import L from "leaflet";
 
 const markerIcon = new L.Icon({
-	iconUrl: "https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png",
+	iconUrl: "./marker-icon.png",
 	iconAnchor: new L.Point(12, 40),
 });
 
