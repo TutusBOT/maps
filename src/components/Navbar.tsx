@@ -5,9 +5,9 @@ const Navbar = () => {
 		<header>
 			<nav
 				role="navigation"
-				className="w-full px-4 py-4 flex text-xl bg-black text-white"
+				className="fixed w-full px-4 py-4 flex text-xl bg-black text-white"
 			>
-				<Link to="/maps/">HOME</Link>
+				<Link to="/maps/">MAPS</Link>
 			</nav>
 		</header>
 	);
