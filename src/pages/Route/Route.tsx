@@ -36,59 +36,95 @@ const Route = () => {
 		}
 	}, []);
 	return (
-		<div className="h-screen">
+		<div className="h-screen overflow-hidden">
 			<Navbar />
-			<main className="w-full py-16 px-2 sm:px-8">
-				<div
-					className="flex flex-col w-full text-base sm:text-lg py-4"
+			<div className="w-full pt-16 px-2 sm:px-8 sm:grid sm:grid-cols-3 pb-2">
+				<table
+					className="flex flex-col  text-base sm:text-lg sm:px-8  py-4 border-2 border-black rounded-lg col-span-2"
 					ref={pdfRef}
 				>
-					<h3 className="text-lg sm:text-2xl">Dane trasy</h3>
-					<div>Miejsce początkowe: {appContext.currentRoute.origin}</div>
-					<div>
-						Współrzędne geograficzne miejsca początkowego:{" "}
-						{appContext.currentRoute.positions[0][0]}{" "}
-						{appContext.currentRoute.positions[0][1]}
-					</div>
-					<div>Miejsce docelowe: {appContext.currentRoute.destination}</div>
-					<div>
-						Współrzędne geograficzne miejsca docelowego:{" "}
-						{
-							appContext.currentRoute.positions[
-								appContext.currentRoute.positions.length - 1
-							][0]
-						}{" "}
-						{
-							appContext.currentRoute.positions[
-								appContext.currentRoute.positions.length - 1
-							][1]
-						}
-					</div>
-					<div>Dystans: {appContext.currentRoute.length / 1000}km</div>
-					<div>
-						Koszt:{" "}
-						{calculateRouteCost({
-							cost: parseFloat(cost),
-							length: appContext.currentRoute.length,
-							toll: appContext.currentRoute.toll,
-						})}
-						zł
-					</div>
-				</div>
-				<div className="flex">
+					<thead>
+						<tr>
+							<th className="text-lg sm:text-2xl" colSpan={1}>
+								Dane trasy
+							</th>
+						</tr>
+					</thead>
+					<tbody className="mt-4">
+						<tr className="flex justify-between border-b-2 border-gray-300 mt-2 pb-1">
+							<td>Miejsce początkowe </td>
+							<td>{appContext.currentRoute.origin}</td>
+						</tr>
+						<tr className="flex justify-between border-b-2 border-gray-300 mt-2 pb-1">
+							<td>Współrzędne geograficzne</td>
+							<td>
+								{appContext.currentRoute.positions[0][0]}{" "}
+								{appContext.currentRoute.positions[0][1]}
+							</td>
+						</tr>
+						<tr className="flex justify-between border-b-2 border-gray-300 mt-2 pb-1">
+							<td>Miejsce docelowe</td>
+							<td>{appContext.currentRoute.destination}</td>
+						</tr>
+						<tr className="flex justify-between border-b-2 border-gray-300 mt-2 pb-1">
+							<td>Współrzędne geograficzne</td>
+							<td>
+								{
+									appContext.currentRoute.positions[
+										appContext.currentRoute.positions.length - 1
+									][0]
+								}{" "}
+								{
+									appContext.currentRoute.positions[
+										appContext.currentRoute.positions.length - 1
+									][1]
+								}
+							</td>
+						</tr>
+						<tr className="flex justify-between border-b-2 border-gray-300 mt-2 pb-1">
+							<td>Dystans</td>
+							<td> {(appContext.currentRoute.length / 1000).toFixed(2)}km</td>
+						</tr>
+						<tr className="flex justify-between border-b-2 border-gray-300 mt-2 pb-1">
+							<td>Koszt</td>
+							<td>
+								{calculateRouteCost({
+									cost: parseFloat(cost),
+									length: appContext.currentRoute.length,
+									toll: appContext.currentRoute.toll,
+								})}
+								zł
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div className="flex flex-col items-center justify-center gap-4 py-4">
 					<Input
 						id="cost"
 						name="cost"
-						label="Koszt"
+						label="Koszt (zł/km)"
 						onChange={(e) => setCost(e.target.value)}
 						value={cost}
+						className="max-w-xs"
+						type="number"
+						min={0}
 					/>
-					<Button variant="filled" onClick={generatePDF}>
-						POBIERZ TRASĘ
-					</Button>
+					<div className="flex flex-col sm:flex-row gap-4 w-full max-w-xs sm:justify-between">
+						<Button variant="filled" onClick={generatePDF}>
+							Pobierz trasę
+						</Button>
+						<Button
+							variant="outlined"
+							onClick={() => {
+								navigate("/maps/#history");
+							}}
+						>
+							Historia tras
+						</Button>
+					</div>
 				</div>
-				<Map />
-			</main>
+			</div>
+			<Map />
 		</div>
 	);
 };
