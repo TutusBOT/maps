@@ -11,10 +11,8 @@ import { AppContext } from "../App";
 import L from "leaflet";
 
 const markerIcon = new L.Icon({
-	iconUrl: require("https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png"),
-	iconRetinaUrl: require("https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png"),
-	iconSize: new L.Point(60, 75),
-	className: "leaflet-div-icon",
+	iconUrl: "https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png",
+	iconAnchor: new L.Point(12, 40),
 });
 
 const Map = () => {
