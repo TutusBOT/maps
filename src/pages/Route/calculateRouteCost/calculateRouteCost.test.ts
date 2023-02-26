@@ -9,7 +9,7 @@ describe("calculate Route Cost", () => {
 	it("returns toll if cost is 0", () => {
 		const toll = 5.0;
 		expect(calculateRouteCost({ cost: 0, length: 500, toll: toll })).toBe(
-			toll * 1.1
+			(toll * 1.1).toFixed(2)
 		);
 	});
 
