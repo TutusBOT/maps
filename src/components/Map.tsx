@@ -8,6 +8,14 @@ import {
 import "leaflet/dist/leaflet.css";
 import { useContext } from "react";
 import { AppContext } from "../App";
+import L from "leaflet";
+
+const markerIcon = new L.Icon({
+	iconUrl: require("https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png"),
+	iconRetinaUrl: require("https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png"),
+	iconSize: new L.Point(60, 75),
+	className: "leaflet-div-icon",
+});
 
 const Map = () => {
 	const appContext = useContext(AppContext);
@@ -29,7 +37,7 @@ const Map = () => {
 				color="#0000FF"
 				weight={3}
 			/>
-			<Marker position={appContext.currentRoute.positions[0]}>
+			<Marker position={appContext.currentRoute.positions[0]} icon={markerIcon}>
 				<Tooltip>{appContext.currentRoute.origin}</Tooltip>
 			</Marker>
 			<Marker
@@ -38,6 +46,7 @@ const Map = () => {
 						appContext.currentRoute.positions.length - 1
 					]
 				}
+				icon={markerIcon}
 			>
 				<Tooltip>{appContext.currentRoute.destination}</Tooltip>
 			</Marker>
